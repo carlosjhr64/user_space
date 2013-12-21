@@ -2,6 +2,8 @@
 
 == DESCRIPTION:
 
+Automates certain XDG features.
+
 == SYNOPSIS:
 
 == FEATURES/PROBLEMS:
