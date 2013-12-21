@@ -80,6 +80,8 @@ module USER_SPACE
 
     # This reads the data directory's version file
     def version
+      fn = versionfile
+      return nil unless File.exist? fn
       File.read(versionfile).strip
     end
 
