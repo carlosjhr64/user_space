@@ -90,9 +90,12 @@ module USER_SPACE
     # App should consider being nice about this,
     # like warn the user or something.
     def install
-      appdata = File.join @appdir, 'data'
-      userdir = File.join XDG['DATA'].to_s, @appname
-      FileUtils.cp_r(Dir.glob("#{appdata}/*"), userdir)
+      appdata    = File.join @appdir, 'data'
+      appcache   = File.join @appdir, 'cache'
+      userdata   = File.join XDG['DATA'].to_s,  @appname
+      usercache  = File.join XDG['CACHE'].to_s, @appname
+      FileUtils.cp_r(Dir.glob("#{appdata}/*"),  userdata)
+      FileUtils.cp_r(Dir.glob("#{appcache}/*"), usercache)
     end
 
   end
