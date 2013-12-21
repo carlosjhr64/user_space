@@ -60,6 +60,10 @@ module USER_SPACE
       File.join XDG['CONFIG'].to_s, @appname, basename
     end
 
+    def config?(options=@options)
+      File.exist?(config_file_name(options))
+    end
+
     # Reads config
     def config(options=@options)
       options[:parser].parse File.read(config_file_name(options))
