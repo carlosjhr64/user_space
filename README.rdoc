@@ -6,11 +6,32 @@ Automates certain XDG features.
 
 == SYNOPSIS:
 
+   require 'user_space'
+   # APP::CONFIG is your app's configation.
+   # Perhaps like...
+   APP::CONFIG = {:tts=>'espeak', }
+   # By default, UserSpace works with the JSON parser.
+   USERSPACE = USER_SPACE::UserSpace.new
+   # Unless this version has been installed,
+   # we copy over our data and cache directories.
+   USERSPACE.install unless USERSPACE.version == APP::VERSION
+   if USERSPACE.config?
+     # Because JSON hashes by String, converting to Symbol.
+     # We pad up APP::CONFIG with user's preferences:
+     USERSPACE.config.each{|opt, value| APP::CONFIG[opt.to_sym] = value}
+   else
+     # We initialize user preferences with our initial APP::CONFIG
+     STDERR.puts "Writting '#{USERSPACE.config_file_name}'"
+     USERSPACE.config = APP::CONFIG
+   end
+
 == FEATURES/PROBLEMS:
+
+* Still in alpha, have not publish to ruby gems yet.
 
 == INSTALL:
 
-  $ sudo gem install user_space
+Not yet available.
 
 == LICENSE:
 
