@@ -1,4 +1,5 @@
 History.txt
+Manifest.txt
 README.rdoc
 TODO.txt
 data/VERSION

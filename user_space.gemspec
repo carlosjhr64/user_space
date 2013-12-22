@@ -25,6 +25,7 @@ SUMMARY
   s.require_paths = ["lib"]
   s.files = %w(
 History.txt
+Manifest.txt
 README.rdoc
 TODO.txt
 data/VERSION
@@ -38,6 +39,7 @@ user_space.gemspec
   )
 
   s.add_runtime_dependency 'xdg', '~> 2.2', '>= 2.2.3'
+  s.add_development_dependency 'rainbow', '~> 1.1', '>= 1.1.4'
   s.add_development_dependency 'test-unit', '~> 2.5', '>= 2.5.5'
   s.requirements << 'ruby: ruby 2.0.0p247 (2013-06-27 revision 41674) [x86_64-linux]'
 
