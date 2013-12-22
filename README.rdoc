@@ -7,7 +7,7 @@ Automates certain XDG features.
 == SYNOPSIS:
 
    require 'user_space'
-   # APP::CONFIG is your app's configation.
+   # APP::CONFIG is your app's configuration.
    # Perhaps like...
    APP::CONFIG = {:tts=>'espeak', }
    # By default, UserSpace works with the JSON parser.
