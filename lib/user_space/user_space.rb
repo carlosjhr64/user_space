@@ -23,18 +23,8 @@ module USER_SPACE
         @appdir = File.expand_path appdir
       end
 
-      xdg_pairs do |basedir, userdir|
-        if File.exist?(userdir)
-          # Sanity check
-          raise "Not a directory: #{userdir}" unless File.directory?(userdir)
-        else
-          if File.directory? basedir
-            FileUtils.cp_r(basedir, userdir)
-          else
-            Dir.mkdir(userdir, 0700)
-          end
-        end
-      end
+      # install with no overwrite
+      install(false)
     end
 
     def xdg_pairs
@@ -50,11 +40,18 @@ module USER_SPACE
     # This overwrites the user's data directory with a fresh install.
     # App should consider being nice about this,
     # like warn the user or something.
-    def install
+    def install(overwrite=true)
       xdg_pairs do |basedir, userdir|
-        if File.directory? basedir
-          FileUtils.cp_r(Dir.glob("#{basedir}/*"), userdir)
+        if File.exist?(userdir)
+          # Sanity check
+          raise "Not a directory: #{userdir}" unless File.directory?(userdir)
+          # Pre-existing directory.
+          # Return unless user wants to overwrite.
+          return unless overwrite
+        else
+          Dir.mkdir(userdir, 0700)
         end
+        FileUtils.cp_r(Dir.glob("#{basedir}/*"), userdir) if File.directory? basedir
       end
     end
 
