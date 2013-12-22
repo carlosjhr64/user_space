@@ -1,7 +1,7 @@
 module USER_SPACE
   class UserSpace
 
-    OPTIONS    = {:name    => 'config',
+    OPTIONS    = {:config  => 'config',
                   :parser  =>  JSON,
                   :ext     =>  nil,
                   :version => 'VERSION'}
@@ -71,7 +71,7 @@ module USER_SPACE
     def config_file_name(options=@options)
       parser   = options[:parser]
       ext      = options[:ext] || parser.to_s.downcase
-      basename = "#{options[:name]}.#{ext}"
+      basename = "#{options[:config]}.#{ext}"
       File.join XDG['CONFIG'].to_s, @appname, basename
     end
 

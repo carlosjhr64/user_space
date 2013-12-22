@@ -22,7 +22,7 @@ class TestUserSpace < Test::Unit::TestCase
   end
 
   def test_user_space_constants
-    assert_equal 'config',  UserSpace::OPTIONS[:name]
+    assert_equal 'config',  UserSpace::OPTIONS[:config]
     assert_equal JSON,      UserSpace::OPTIONS[:parser]
     assert_equal 'VERSION', UserSpace::OPTIONS[:version]
     assert_nil   UserSpace::OPTIONS[:ext]
@@ -49,8 +49,17 @@ class TestUserSpace < Test::Unit::TestCase
     assert(userspace.xdgbases.include?('CONFIG'))
     assert(userspace.xdgbases.include?('DATA'))
 
+    count = 0
+    userspace.xdg_pairs do |basedir, userdir|
+      count += 1
+      assert(File.directory?(userdir))
+      refute_nil(userdir=~/\/ima2awesome$/)
+      refute_nil(basedir=~/user_space\/((data)|(config)|(cache))$/)
+    end
+    assert_equal(3, count)
+
     options = userspace.options
-    assert_equal('config',  options[:name])
+    assert_equal('config',  options[:config])
     assert_equal('VERSION', options[:version])
     assert_equal(JSON,      options[:parser])
     assert_nil(options[:ext])
