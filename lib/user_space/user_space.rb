@@ -23,19 +23,37 @@ module USER_SPACE
         @appdir = File.expand_path appdir
       end
 
-      @xdgbases.each do |base|
-        xdg = XDG[base].to_s
-        userdir = File.join(xdg, @appname)
+      xdg_pairs do |basedir, userdir|
         if File.exist?(userdir)
           # Sanity check
-          raise "don't have #{base.downcase} directory: #{userdir}" unless File.directory?(userdir)
+          raise "Not a directory: #{userdir}" unless File.directory?(userdir)
         else
-          if base == 'DATA'
-            data = File.join @appdir, 'data'
-            FileUtils.cp_r(data, userdir) if File.directory?(data)
+          if File.directory? basedir
+            FileUtils.cp_r(basedir, userdir)
           else
             Dir.mkdir(userdir, 0700)
           end
+        end
+      end
+    end
+
+    def xdg_pairs
+      @xdgbases.each do |base|
+        xdg = XDG[base].to_s
+        userdir = File.join(xdg, @appname)
+        basedir = File.join @appdir, base.downcase
+        yield basedir, userdir
+      end
+    end
+
+    # Note that initialize will not overwrite anything.
+    # This overwrites the user's data directory with a fresh install.
+    # App should consider being nice about this,
+    # like warn the user or something.
+    def install
+      xdg_pairs do |basedir, userdir|
+        if File.directory? basedir
+          FileUtils.cp_r(Dir.glob("#{basedir}/*"), userdir)
         end
       end
     end
@@ -60,6 +78,11 @@ module USER_SPACE
       File.join XDG['CONFIG'].to_s, @appname, basename
     end
 
+    # Not really for public use.
+    def version_file_name
+      File.join XDG['DATA'].to_s, @appname, @options[:version]
+    end
+
     def config?(options=@options)
       File.exist?(config_file_name(options))
     end
@@ -74,28 +97,11 @@ module USER_SPACE
       File.open(config_file_name, 'w', 0600){|fh| fh.puts options[:parser].pretty_generate obj}
     end
 
-    def versionfile
-      File.join XDG['DATA'].to_s, @appname, @options[:version]
-    end
-
     # This reads the data directory's version file
     def version
-      fn = versionfile
+      fn = version_file_name
       return nil unless File.exist? fn
-      File.read(versionfile).strip
-    end
-
-    # Note that initialize will not overwrite anything.
-    # This overwrites the user's data directory with a fresh install.
-    # App should consider being nice about this,
-    # like warn the user or something.
-    def install
-      appdata    = File.join @appdir, 'data'
-      appcache   = File.join @appdir, 'cache'
-      userdata   = File.join XDG['DATA'].to_s,  @appname
-      usercache  = File.join XDG['CACHE'].to_s, @appname
-      FileUtils.cp_r(Dir.glob("#{appdata}/*"),  userdata)
-      FileUtils.cp_r(Dir.glob("#{appcache}/*"), usercache)
+      File.read(version_file_name).strip
     end
 
   end

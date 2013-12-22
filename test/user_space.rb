@@ -70,7 +70,7 @@ class TestUserSpace < Test::Unit::TestCase
     assert_equal config1, config2
 
     # Overwrite version file...
-    File.open(userspace.versionfile, 'w'){|fh|fh.puts 'A.B.C'}
+    File.open(userspace.version_file_name, 'w'){|fh|fh.puts 'A.B.C'}
     # Now we get the version given to the file:
     assert_equal 'A.B.C', userspace.version
     # Which is different from the initial version
