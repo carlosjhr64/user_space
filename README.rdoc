@@ -1,5 +1,8 @@
 = user_space
 
+github :: https://www.github.com/carlosjhr64/user_space
+rubygems :: https://rubygems.org/gems/user_space
+
 == DESCRIPTION:
 
 Automates certain XDG features.
@@ -25,13 +28,13 @@ Automates certain XDG features.
      USERSPACE.config = APP::CONFIG
    end
 
-== FEATURES/PROBLEMS:
+== FEATURES:
 
-* Still in alpha, have not publish to ruby gems yet.
+* used in mplay[https://www.rubygems.org/gems/mplay]
 
 == INSTALL:
 
-Not yet available.
+   sudo gem install user_space
 
 == LICENSE:
 
