@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.author   = 'CarlosJHR64'
   s.email    = 'carlosjhr64@gmail.com'
 
-  s.date     = '2013-12-21'
+  s.date     = '2013-12-22'
   s.licenses = ['MIT']
 
   s.description = <<DESCRIPTION
@@ -34,6 +34,7 @@ lib/user_space.rb
 lib/user_space/user_space.rb
 lib/user_space/version.rb
 test/user_space.rb
+user_space.gemspec
   )
 
   s.add_runtime_dependency 'xdg', '~> 2.2', '>= 2.2.3'
