@@ -52,6 +52,8 @@ module USER_SPACE
           Dir.mkdir(userdir, 0700)
         end
         FileUtils.cp_r(Dir.glob("#{basedir}/*"), userdir) if File.directory? basedir
+        FileUtils.chmod_R 'og-rwx', userdir
+        FileUtils.chmod_R 'u+rwX',  userdir
       end
     end
 

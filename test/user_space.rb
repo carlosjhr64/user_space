@@ -18,7 +18,7 @@ class TestUserSpace < Test::Unit::TestCase
   include USER_SPACE
 
   def test_user_space_version
-    assert_equal('0.0.0', VERSION)
+    assert_equal('0.1.0', VERSION)
   end
 
   def test_user_space_constants
@@ -64,22 +64,25 @@ class TestUserSpace < Test::Unit::TestCase
     assert_equal(JSON,      options[:parser])
     assert_nil(options[:ext])
 
-    assert File.exist? userspace.cachedir
-    assert File.exist? userspace.configdir
-    assert File.exist? userspace.datadir
+    cachedir, configdir, datadir = userspace.cachedir, userspace.configdir, userspace.datadir
+    assert File.exist? cachedir
+    assert File.exist? configdir
+    assert File.exist? datadir
 
     version = File.read('data/VERSION').strip
     assert_equal version, userspace.version
 
-    refute File.exist? userspace.config_file_name
+    config_file_name = userspace.config_file_name
+    refute File.exist? config_file_name
     config1 = {'a'=>"A", 'b'=>"B"}
     userspace.config = config1
-    assert File.exist? userspace.config_file_name
-    config2 = JSON.parse File.read userspace.config_file_name
+    assert File.exist? config_file_name
+    config2 = JSON.parse File.read config_file_name
     assert_equal config1, config2
 
     # Overwrite version file...
-    File.open(userspace.version_file_name, 'w'){|fh|fh.puts 'A.B.C'}
+    version_file_name = userspace.version_file_name
+    File.open(version_file_name, 'w'){|fh|fh.puts 'A.B.C'}
     # Now we get the version given to the file:
     assert_equal 'A.B.C', userspace.version
     # Which is different from the initial version
@@ -89,5 +92,16 @@ class TestUserSpace < Test::Unit::TestCase
     assert_nothing_raised(Exception){userspace.install}
     # Now we have our initial version back
     assert_equal version, userspace.version
+
+    [config_file_name, version_file_name].each do |fn|
+      stat = File.stat(fn)
+      assert_equal stat.mode.to_s(8), '100600'
+    end
+
+    [cachedir, configdir, datadir].each do |dn|
+      stat = File.stat(dn)
+      assert_equal stat.mode.to_s(8), '40700'
+    end
+
   end
 end
