@@ -10,6 +10,7 @@ module USER_SPACE
                   :appdir   => nil, # Can't guess at this point yet?
                   :xdgbases => ['CACHE', 'CONFIG', 'DATA']}
 
+    attr_accessor :trace, :verbose
     attr_reader :appname, :appdir, :xdgbases, :options
     def initialize(parameters=PARAMETERS)
 
@@ -89,6 +90,10 @@ module USER_SPACE
     # Reads config
     def config(options=@options)
       options[:parser].parse File.read(config_file_name(options))
+    rescue
+      trace.puts $!.message    if trace
+      vebose.puts $!.backtrace if verbose
+      nil
     end
 
     # Saves config
@@ -96,12 +101,21 @@ module USER_SPACE
       File.open(config_file_name, 'w', 0600){|fh| fh.puts options[:parser].pretty_generate obj}
     end
 
-    # This reads the data directory's version file
-    def version
-      fn = version_file_name
-      return nil unless File.exist? fn
-      File.read(version_file_name).strip
+    def version?
+      File.exist?(version_file_name)
     end
 
+    # This reads the data directory's version file
+    def version
+      File.read(version_file_name).strip
+    rescue
+      trace.puts $!.message    if trace
+      vebose.puts $!.backtrace if verbose
+      nil
+    end
+
+    def version=(v)
+      File.open(version_file_name, 'w', 0600){|fh| fh.puts v}
+    end
   end
 end

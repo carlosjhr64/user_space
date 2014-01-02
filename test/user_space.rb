@@ -103,5 +103,8 @@ class TestUserSpace < Test::Unit::TestCase
       assert_equal stat.mode.to_s(8), '40700'
     end
 
+    assert userspace.version?
+    assert_nothing_raised(Exception){ userspace.version='Fantastico' }
+    assert_equal userspace.version, 'Fantastico'
   end
 end
