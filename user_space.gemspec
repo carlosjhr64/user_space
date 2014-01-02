@@ -1,14 +1,14 @@
 Gem::Specification.new do |s|
 
   s.name     = 'user_space'
-  s.version  = '0.1.0'
+  s.version  = '0.2.0'
 
   s.homepage = 'https://github.com/carlosjhr64/user_space'
 
   s.author   = 'CarlosJHR64'
   s.email    = 'carlosjhr64@gmail.com'
 
-  s.date     = '2013-12-30'
+  s.date     = '2014-01-02'
   s.licenses = ['MIT']
 
   s.description = <<DESCRIPTION
