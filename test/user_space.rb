@@ -18,7 +18,7 @@ class TestUserSpace < Test::Unit::TestCase
   include USER_SPACE
 
   def test_user_space_version
-    assert_equal('0.2.0', VERSION)
+    assert_equal('0.3.0', VERSION)
   end
 
   def test_user_space_constants
