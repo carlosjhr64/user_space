@@ -101,6 +101,15 @@ module USER_SPACE
       File.open(config_file_name, 'w', 0600){|fh| fh.puts options[:parser].pretty_generate obj}
     end
 
+    def configures(hash, trace=nil)
+      if config? # file exists
+        config.each{|opt, value| hash[opt.to_sym] = value}
+      else
+        trace.puts config_file_name if trace
+        self.config = hash
+      end
+    end
+
     def version?
       File.exist?(version_file_name)
     end

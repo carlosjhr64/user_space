@@ -106,5 +106,24 @@ class TestUserSpace < Test::Unit::TestCase
     assert userspace.version?
     assert_nothing_raised(Exception){ userspace.version='Fantastico' }
     assert_equal userspace.version, 'Fantastico'
+
+    # testing configures
+    config_file_name = userspace.config_file_name
+    File.unlink config_file_name if File.exist? config_file_name
+    config1 = {:a=>'A', :b=>'B'}
+    refute File.exist? config_file_name
+    userspace.configures(config1)
+    # Here, it copies to file.
+    assert File.exist? config_file_name
+    # And config1 remains unchanged.
+    assert_equal(config1[:a], 'A')
+    assert_equal(config1[:b], 'B')
+    assert_equal(config1[:c], nil)
+    config2 = {:a=>'AAA', :c=>'CCC'}
+    # Here, config2 is overwritten with config1 from file.
+    userspace.configures(config2)
+    assert_equal(config2[:a], 'A') # overwritten
+    assert_equal(config2[:b], 'B') # padded up
+    assert_equal(config2[:c], 'CCC') # Original value
   end
 end
