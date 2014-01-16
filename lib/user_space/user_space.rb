@@ -48,7 +48,7 @@ module USER_SPACE
           raise "Not a directory: #{userdir}" unless File.directory?(userdir)
           # Pre-existing directory.
           # Return unless user wants to overwrite.
-          return unless overwrite
+          next unless overwrite
         else
           Dir.mkdir(userdir, 0700)
         end
@@ -101,9 +101,9 @@ module USER_SPACE
       File.open(config_file_name, 'w', 0600){|fh| fh.puts options[:parser].pretty_generate obj}
     end
 
-    def configures(hash, trace=nil)
-      if config? # file exists
-        config.each{|opt, value| hash[opt.to_sym] = value}
+    def configures(hash)
+      if self.config? # file exists
+        self.config.each{|opt, value| hash[opt.to_sym] = value}
       else
         trace.puts config_file_name if trace
         self.config = hash
