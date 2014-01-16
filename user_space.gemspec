@@ -1,14 +1,14 @@
 Gem::Specification.new do |s|
 
   s.name     = 'user_space'
-  s.version  = '0.2.0'
+  s.version  = '0.3.0'
 
   s.homepage = 'https://github.com/carlosjhr64/user_space'
 
   s.author   = 'CarlosJHR64'
   s.email    = 'carlosjhr64@gmail.com'
 
-  s.date     = '2014-01-02'
+  s.date     = '2014-01-16'
   s.licenses = ['MIT']
 
   s.description = <<DESCRIPTION
@@ -25,7 +25,6 @@ SUMMARY
   s.require_paths = ["lib"]
   s.files = %w(
 History.txt
-Manifest.txt
 README.rdoc
 TODO.txt
 data/VERSION
@@ -39,8 +38,8 @@ user_space.gemspec
   )
 
   s.add_runtime_dependency 'xdg', '~> 2.2', '>= 2.2.3'
-  s.add_development_dependency 'rainbow', '~> 1.1', '>= 1.1.4'
+  s.add_development_dependency 'rainbow', '~> 1.99', '>= 1.99.1'
   s.add_development_dependency 'test-unit', '~> 2.5', '>= 2.5.5'
-  s.requirements << 'ruby: ruby 2.0.0p247 (2013-06-27 revision 41674) [x86_64-linux]'
+  s.requirements << 'ruby: ruby 2.1.0p0 (2013-12-25 revision 44422) [x86_64-linux]'
 
 end
