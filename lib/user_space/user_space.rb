@@ -20,8 +20,10 @@ module USER_SPACE
       @options  = OPTIONS
 
       unless @appdir
-        appdir = File.dirname File.dirname caller.first.split(/:/,2).first
+        appdir = File.dirname File.dirname caller_locations(1,1)[0].path
+        appdir = File.dirname appdir if File.basename(appdir)=='lib'
         @appdir = File.expand_path appdir
+        verbose.puts "Warning: UserSpace#appdir heuristics used" if verbose
       end
 
       # install with no overwrite
@@ -92,7 +94,7 @@ module USER_SPACE
       options[:parser].parse File.read(config_file_name(options))
     rescue
       trace.puts $!.message    if trace
-      vebose.puts $!.backtrace if verbose
+      verbose.puts $!.backtrace if verbose
       nil
     end
 
@@ -119,7 +121,7 @@ module USER_SPACE
       File.read(version_file_name).strip
     rescue
       trace.puts $!.message    if trace
-      vebose.puts $!.backtrace if verbose
+      verbose.puts $!.backtrace if verbose
       nil
     end
 
