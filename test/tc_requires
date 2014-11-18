@@ -1,0 +1,15 @@
+#! ruby
+require 'test/unit'
+require 'user_space'
+
+class TestRequires < Test::Unit::TestCase
+  def test_requires
+    assert_nothing_raised() do
+      FileUtils
+      JSON
+      XDG
+      UserSpace
+      UserSpace::VERSION
+    end
+  end
+end

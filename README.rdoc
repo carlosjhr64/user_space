@@ -14,7 +14,7 @@ Automates certain XDG features.
    # Perhaps like...
    APP::CONFIG = {:tts=>'espeak', }
    # By default, UserSpace works with the JSON parser.
-   USERSPACE = USER_SPACE::UserSpace.new
+   USERSPACE = UserSpace.new
    # Unless this version has been installed,
    # we copy over our data and cache directories.
    USERSPACE.install unless USERSPACE.version == APP::VERSION

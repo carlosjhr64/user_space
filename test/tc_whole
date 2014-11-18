@@ -16,17 +16,15 @@ require 'user_space'
 
 class TestUserSpace < Test::Unit::TestCase
 
-  include USER_SPACE
-
   def test_user_space_version
-    assert_equal('1.0.0', VERSION)
+    assert_equal('2.0.0', UserSpace::VERSION)
   end
 
   def test_user_space_constants
     assert_equal 'config',  UserSpace::OPTIONS[:config]
     assert_equal JSON,      UserSpace::OPTIONS[:parser]
     assert_equal 'VERSION', UserSpace::OPTIONS[:version]
-    assert_nil   UserSpace::OPTIONS[:ext]
+    assert_equal 'json',    UserSpace::OPTIONS[:ext]
 
     assert_equal 'ima2awesome', UserSpace::PARAMETERS[:appname]
 
@@ -63,7 +61,7 @@ class TestUserSpace < Test::Unit::TestCase
     assert_equal('config',  options[:config])
     assert_equal('VERSION', options[:version])
     assert_equal(JSON,      options[:parser])
-    assert_nil(options[:ext])
+    assert_equal('json',    options[:ext])
 
     cachedir, configdir, datadir = userspace.cachedir, userspace.configdir, userspace.datadir
     assert File.exist? cachedir

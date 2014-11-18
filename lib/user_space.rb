@@ -1,4 +1,3 @@
-require 'English'
 require 'fileutils'
 require 'json' # default parser
 require 'xdg'
