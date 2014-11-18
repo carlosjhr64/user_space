@@ -28,7 +28,6 @@ README.rdoc
 lib/user_space.rb
 lib/user_space/user_space.rb
 lib/user_space/version.rb
-user_space.gemspec
   )
 
   s.add_runtime_dependency 'xdg', '~> 2.2', '>= 2.2.3'
