@@ -5,6 +5,7 @@
  (features\/)|
  (test\/)|
  (TODO\.)|
- (such.gemspec)|
+ (*.gemspec)|
+ (data\/)|
  (History\.)
 )
