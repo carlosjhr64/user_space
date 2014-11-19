@@ -26,7 +26,7 @@ class TestConstants < Test::Unit::TestCase
       opt = UserSpace::OPTIONS
       assert_equal 'config', opt[:config]
       assert_equal 'VERSION', opt[:version]
-      assert_equal 'marshal', opt[:ext]
+      assert_equal nil, opt[:ext]
       assert_equal Marshal, opt[:parser]
 
       par = UserSpace::PARAMETERS

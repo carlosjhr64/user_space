@@ -8,7 +8,6 @@ class UserSpace
   ['JSON','YAML','Marshal'].each do |parser|
     begin
       OPTIONS[:parser] = Object.const_get parser
-      OPTIONS[:ext] = parser.downcase
       $stderr.puts "USER_SPACE will use #{parser} by default." if $VERBOSE
       break
     rescue NameError
