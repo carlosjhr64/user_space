@@ -13,3 +13,5 @@ b2df08bdd1e6f0be634109602ef1c63e  pkg/user_space-0.3.0.gem
 f1bf6602bea055458865bbebc604b31c  pkg/user_space-1.0.0.gem
 === 2.0.0 / 2014-11-19 08:47:40 -0800
 436bf761fa1dcd78686c88f7a48c6a15  pkg/user_space-2.0.0.gem
+=== 2.0.1 / 2014-11-19 09:13:13 -0800
+b0bfbb0476c570ad130ee7d4893d36fa  pkg/user_space-2.0.1.gem
