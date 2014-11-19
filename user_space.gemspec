@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
 
   s.name     = 'user_space'
-  s.version  = '2.0.0'
+  s.version  = '2.0.1'
 
   s.homepage = 'https://github.com/carlosjhr64/user_space'
 
