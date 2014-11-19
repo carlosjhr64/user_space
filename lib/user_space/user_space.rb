@@ -102,7 +102,7 @@ class UserSpace
   # Reads config
   def config
     p, d = @options[:parser], File.read(config_file_name)
-    (p.respond_to?(:parse))? p.parse(d) : p.load(d)
+    p.load(d)
   rescue
     $stderr.puts $!.message   if $VERBOSE
     $stderr.puts $!.backtrace if $DEBUG
