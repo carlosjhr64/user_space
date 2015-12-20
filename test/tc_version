@@ -5,7 +5,7 @@ require 'user_space/version'
 class TestVersion < Test::Unit::TestCase
   def test_version
     assert_nothing_raised() do
-      assert_equal('2.0.1', UserSpace::VERSION)
+      assert_equal('2.1.0', UserSpace::VERSION)
     end
   end
 end

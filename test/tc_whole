@@ -17,7 +17,7 @@ require 'user_space'
 class TestUserSpace < Test::Unit::TestCase
 
   def test_user_space_version
-    assert_equal('2.0.1', UserSpace::VERSION)
+    assert_equal('2.1.0', UserSpace::VERSION)
   end
 
   def test_user_space_constants
@@ -44,9 +44,9 @@ class TestUserSpace < Test::Unit::TestCase
     assert_equal(dirname, userspace.appdir)
 
     xdgbases = userspace.xdgbases
-    assert(userspace.xdgbases.include?('CACHE'))
-    assert(userspace.xdgbases.include?('CONFIG'))
-    assert(userspace.xdgbases.include?('DATA'))
+    assert(xdgbases.include?('CACHE'))
+    assert(xdgbases.include?('CONFIG'))
+    assert(xdgbases.include?('DATA'))
 
     count = 0
     userspace.xdg_pairs do |basedir, userdir|

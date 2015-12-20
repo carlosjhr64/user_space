@@ -1,3 +1,14 @@
+module FileUtils
+  class << self
+    def user_space_cpr(src, dest)
+      fu_each_src_dest(src, dest) do |s, d|
+        copy_entry(s, d)
+        chmod('u+rwX,go-rwx', d)
+      end
+    end
+  end
+end
+
 class UserSpace
   OPTIONS = {
     config:  'config',
@@ -64,9 +75,7 @@ class UserSpace
       else
         Dir.mkdir(userdir, 0700)
       end
-      FileUtils.cp_r(Dir.glob("#{basedir}/*"), userdir) if File.directory? basedir
-      FileUtils.chmod_R 'og-rwx', userdir
-      FileUtils.chmod_R 'u+rwX',  userdir
+      FileUtils.user_space_cpr(Dir.glob("#{basedir}/*"), userdir) if File.directory? basedir
     end
   end
 
