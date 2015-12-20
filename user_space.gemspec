@@ -1,14 +1,14 @@
 Gem::Specification.new do |s|
 
   s.name     = 'user_space'
-  s.version  = '2.0.1'
+  s.version  = '2.1.0'
 
   s.homepage = 'https://github.com/carlosjhr64/user_space'
 
   s.author   = 'carlosjhr64'
   s.email    = 'carlosjhr64@gmail.com'
 
-  s.date     = '2014-11-19'
+  s.date     = '2015-12-19'
   s.licenses = ['MIT']
 
   s.description = <<DESCRIPTION
@@ -31,6 +31,6 @@ lib/user_space/version.rb
   )
 
   s.add_runtime_dependency 'xdg', '~> 2.2', '>= 2.2.3'
-  s.requirements << 'ruby: ruby 2.1.3p242 (2014-09-19 revision 47630) [x86_64-linux]'
+  s.requirements << 'ruby: ruby 2.2.3p173 (2015-08-18 revision 51636) [x86_64-linux]'
 
 end
