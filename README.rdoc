@@ -5,16 +5,16 @@ rubygems :: https://rubygems.org/gems/user_space
 
 == DESCRIPTION:
 
-Automates certain XDG features.
+Maintains the app's XDG features: app's cache, config, and data directories.
 
 == SYNOPSIS:
 
+   require 'json' # Using JSON parser for the config file.
    require 'user_space'
    # APP::CONFIG is your app's configuration.
    # Perhaps like...
    APP::CONFIG = {:tts=>'espeak', }
-   # By default, UserSpace works with the JSON parser.
-   USERSPACE = UserSpace.new
+   USERSPACE = UserSpace.new(JSON)
    # Unless this version has been installed,
    # we copy over our data and cache directories.
    USERSPACE.install unless USERSPACE.version == APP::VERSION
@@ -30,10 +30,6 @@ Automates certain XDG features.
    # To do the same thing, you can also say:
    # USERSPACE.configures(APP::CONFIG)
 
-== FEATURES:
-
-* used in mplay[https://www.rubygems.org/gems/mplay]
-
 == INSTALL:
 
    sudo gem install user_space
@@ -42,7 +38,7 @@ Automates certain XDG features.
 
 (The MIT License)
 
-Copyright (c) 2013 CarlosJHR64
+Copyright (c) 2017 CarlosJHR64
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
