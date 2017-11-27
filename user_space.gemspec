@@ -12,11 +12,11 @@ Gem::Specification.new do |s|
   s.licenses = ['MIT']
 
   s.description = <<DESCRIPTION
-Automates certain XDG features.
+Maintains the app's XDG features: app's cache, config, and data directories.
 DESCRIPTION
 
   s.summary = <<SUMMARY
-Automates certain XDG features.
+Maintains the app's XDG features: app's cache, config, and data directories.
 SUMMARY
 
   s.extra_rdoc_files = ['README.rdoc']
