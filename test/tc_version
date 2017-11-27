@@ -1,11 +1,11 @@
 #! ruby
 require 'test/unit'
-require 'user_space/version'
+require 'user_space'
 
 class TestVersion < Test::Unit::TestCase
   def test_version
     assert_nothing_raised() do
-      assert_equal('2.1.0', UserSpace::VERSION)
+      assert_equal('3.0.0', UserSpace::VERSION)
     end
   end
 end

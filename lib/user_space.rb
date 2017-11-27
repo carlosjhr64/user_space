@@ -23,17 +23,16 @@ class UserSpace
     File.expand_path appdir
   end
 
-  attr_reader :appname, :appdir, :xdgbases, :options
+  attr_reader :parser,:ext,:appname,:xdgbases,:appdir,:config
   def initialize(
     parser,
     ext: parser.to_s.downcase,
     appname: File.basename($0),
     xdgbases: ['CACHE', 'CONFIG', 'DATA'],
     appdir: UserSpace.appdir,
-    config: 'config',
-    version: 'VERSION'
+    config: 'config'
   )
-    @parser,@ext,@appname,@xdgbases,@appdir,@config,@version = parser,ext,appname,xdgbases,appdir,config,version
+    @parser,@ext,@appname,@xdgbases,@appdir,@config = parser,ext,appname,xdgbases,appdir,config
     install(false) # install with no overwrite
   end
 
@@ -84,7 +83,7 @@ class UserSpace
 
   # Not really for public use.
   def version_file_name
-    File.join XDG['DATA'].to_s, @appname, @version
+    File.join XDG['DATA'].to_s, @appname, 'VERSION'
   end
 
   def config?
