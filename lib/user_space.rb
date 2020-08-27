@@ -3,19 +3,8 @@ require 'xdg'
 # Requires:
 #`ruby`
 
-module FileUtils
-  class << self
-    def user_space_cpr(src, dest)
-      fu_each_src_dest(src, dest) do |s, d|
-        copy_entry(s, d)
-        chmod('u+rwX,go-rwx', d)
-      end
-    end
-  end
-end
-
 class UserSpace
-  VERSION = '3.0.0'
+  VERSION = '3.0.1'
 
   def self.appdir
     appdir = File.dirname File.dirname caller_locations(1,1)[0].path
@@ -60,7 +49,11 @@ class UserSpace
       else
         Dir.mkdir(userdir, 0700)
       end
-      FileUtils.user_space_cpr(Dir.glob("#{basedir}/*"), userdir) if File.directory? basedir
+      if File.directory? basedir
+        glob = Dir.glob("#{basedir}/*")
+        FileUtils.cp_r(glob, userdir)
+        FileUtils.chmod_R('u+rwX,go-rwx', glob)
+      end
     end
   end
 
