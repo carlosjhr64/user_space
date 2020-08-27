@@ -1,11 +1,9 @@
 ^(
  (\.)|
- (images\/)|
  (examples\/)|
- (features\/)|
  (test\/)|
+ (features\/)|
  (TODO\.)|
  (\w+\.gemspec)|
- (data\/)|
  (History\.)
 )

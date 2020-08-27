@@ -1,4 +1,5 @@
-pkg
+TODO.txt
 *.swp
-*.gem
+pkg
+tags
 tmp
