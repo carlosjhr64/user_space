@@ -21,3 +21,5 @@ b0bfbb0476c570ad130ee7d4893d36fa  pkg/user_space-2.0.1.gem
 44587845de8a56af7654ceaa7e9a2658  pkg/user_space-3.0.0.gem
 # 3.0.1 / 2020-08-27 16:36:10 -0700
 eed2c82095246a662a05f51f719875c2  pkg/user_space-3.0.1.gem
+# 3.0.2 / 2020-08-27 18:21:28 -0700
+4886f3c1cf03337acde4a7313409cb08  pkg/user_space-3.0.2.gem
