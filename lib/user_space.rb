@@ -4,7 +4,7 @@ require 'xdg'
 #`ruby`
 
 class UserSpace
-  VERSION = '3.0.1'
+  VERSION = '3.0.2'
 
   def self.appdir
     appdir = File.dirname File.dirname caller_locations(1,1)[0].path
@@ -50,9 +50,15 @@ class UserSpace
         Dir.mkdir(userdir, 0700)
       end
       if File.directory? basedir
-        glob = Dir.glob("#{basedir}/*")
-        FileUtils.cp_r(glob, userdir)
-        FileUtils.chmod_R('u+rwX,go-rwx', glob)
+        Dir.glob("#{basedir}/**/*").each do |src|
+          dest = src.sub(basedir, userdir)
+          if File.directory? src
+            Dir.mkdir dest unless File.exist? dest
+          else
+            FileUtils.cp src, dest
+          end
+          FileUtils.chmod('u+rwX,go-rwx', dest)
+        end
       end
     end
   end
