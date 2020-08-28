@@ -22,7 +22,6 @@ SUMMARY
   s.require_paths = ['lib']
   s.files = %w(
 README.md
-data/VERSION
 lib/user_space.rb
   )
 
