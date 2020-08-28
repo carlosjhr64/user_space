@@ -19,7 +19,7 @@ require 'user_space'
 class TestUserSpace < Test::Unit::TestCase
 
   def test_user_space_version
-    assert_equal('3.0.2', UserSpace::VERSION)
+    assert_equal('3.0.3', UserSpace::VERSION)
   end
 
   def test_user_space_new

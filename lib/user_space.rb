@@ -4,7 +4,7 @@ require 'xdg'
 #`ruby`
 
 class UserSpace
-  VERSION = '3.0.2'
+  VERSION = '3.0.3'
 
   def self.appdir
     appdir = File.dirname File.dirname caller_locations(1,1)[0].path
