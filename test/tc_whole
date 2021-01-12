@@ -24,7 +24,7 @@ class TestUserSpace < Test::Unit::TestCase
 
   def test_user_space_new
     userspace = nil
-    assert_nothing_raised(Exception){userspace = UserSpace.new(JSON)}
+    assert_nothing_raised(Exception){userspace = UserSpace.new(parser:JSON)}
 
     assert_equal(APPNAME, userspace.appname)
 

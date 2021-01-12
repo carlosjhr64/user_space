@@ -11,31 +11,21 @@ class UserSpace
     DATA:   ::XDG::Data.new.home.to_s,
   }
 
-  def self.appdir
-    appdir = File.dirname File.dirname caller_locations(1,1)[0].path
-    appdir = File.dirname appdir if File.basename(appdir)=='lib'
-    File.expand_path appdir
-  end
-
   attr_reader :parser,:ext,:appname,:xdgbases,:appdir,:config
-  def initialize(
-    parser,
-    ext: parser.to_s.downcase,
-    appname: File.basename($0),
-    xdgbases: [:CACHE, :CONFIG, :DATA],
-    appdir: UserSpace.appdir,
-    config: 'config'
-  )
+  def initialize( parser:,
+                  ext:      parser.to_s.downcase,
+                  appname:  File.basename($0),
+                  xdgbases: [:CACHE, :CONFIG, :DATA],
+                  appdir:   File.dirname(__dir__),
+                  config:   'config')
     @parser,@ext,@appname,@xdgbases,@appdir,@config = parser,ext,appname,xdgbases,appdir,config
     install(false) # install with no overwrite
   end
 
   def xdg_pairs
     @xdgbases.each do |base|
-      xdg = XDG[base].to_s
-      userdir = File.join(xdg, @appname)
-      basedir = File.join @appdir, base.to_s.downcase
-      yield basedir, userdir
+      # yield basedir, userdir
+      yield File.join(@appdir, base.to_s.downcase), File.join(XDG[base], @appname)
     end
   end
 
@@ -69,25 +59,25 @@ class UserSpace
   end
 
   def cachedir
-    File.join XDG[:CACHE].to_s, @appname
+    File.join XDG[:CACHE], @appname
   end
 
   def configdir
-    File.join XDG[:CONFIG].to_s, @appname
+    File.join XDG[:CONFIG], @appname
   end
 
   def datadir
-    File.join XDG[:DATA].to_s, @appname
+    File.join XDG[:DATA], @appname
   end
 
   # Not really for public use.
   def config_file_name
-    File.join XDG[:CONFIG].to_s, @appname, "#{@config}.#{@ext}"
+    File.join XDG[:CONFIG], @appname, "#{@config}.#{@ext}"
   end
 
   # Not really for public use.
   def version_file_name
-    File.join XDG[:DATA].to_s, @appname, 'VERSION'
+    File.join XDG[:DATA], @appname, 'VERSION'
   end
 
   def config?
@@ -110,8 +100,8 @@ class UserSpace
   end
 
   def configures(hash)
-    if self.config? # file exists
-      self.config.each{|opt, value| hash[opt.to_sym] = value}
+    if config? # file exists
+      config.each{|opt, value| hash[opt.to_sym] = value}
     else
       $stderr.puts config_file_name if $VERBOSE
       self.config = hash

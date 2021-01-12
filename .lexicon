@@ -8,7 +8,6 @@ basename
 Cache
 CACHE
 cachedir
-caller_locations
 chmod
 config
 Config
@@ -21,6 +20,7 @@ Data
 DATA
 datadir
 dest
+__dir__
 Dir
 directory
 dirname
@@ -28,7 +28,6 @@ downcase
 dump
 each
 exist
-expand_path
 ext
 fh
 File
@@ -48,7 +47,6 @@ open
 opt
 overwrite
 parser
-path
 pretty_generate
 puts
 raise
@@ -67,7 +65,6 @@ value
 version
 VERSION
 version_file_name
-xdg
 XDG
 xdgbases
 xdg_pairs
