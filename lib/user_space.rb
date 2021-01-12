@@ -4,7 +4,12 @@ require 'xdg'
 #`ruby`
 
 class UserSpace
-  VERSION = '3.0.3'
+  VERSION = '4.0.210112'
+  XDG = {
+    CACHE:  ::XDG::Cache.new.home.to_s,
+    CONFIG: ::XDG::Config.new.home.to_s,
+    DATA:   ::XDG::Data.new.home.to_s,
+  }
 
   def self.appdir
     appdir = File.dirname File.dirname caller_locations(1,1)[0].path
@@ -17,7 +22,7 @@ class UserSpace
     parser,
     ext: parser.to_s.downcase,
     appname: File.basename($0),
-    xdgbases: ['CACHE', 'CONFIG', 'DATA'],
+    xdgbases: [:CACHE, :CONFIG, :DATA],
     appdir: UserSpace.appdir,
     config: 'config'
   )
@@ -29,7 +34,7 @@ class UserSpace
     @xdgbases.each do |base|
       xdg = XDG[base].to_s
       userdir = File.join(xdg, @appname)
-      basedir = File.join @appdir, base.downcase
+      basedir = File.join @appdir, base.to_s.downcase
       yield basedir, userdir
     end
   end
@@ -64,25 +69,25 @@ class UserSpace
   end
 
   def cachedir
-    File.join XDG['CACHE'].to_s, @appname
+    File.join XDG[:CACHE].to_s, @appname
   end
 
   def configdir
-    File.join XDG['CONFIG'].to_s, @appname
+    File.join XDG[:CONFIG].to_s, @appname
   end
 
   def datadir
-    File.join XDG['DATA'].to_s, @appname
+    File.join XDG[:DATA].to_s, @appname
   end
 
   # Not really for public use.
   def config_file_name
-    File.join XDG['CONFIG'].to_s, @appname, "#{@config}.#{@ext}"
+    File.join XDG[:CONFIG].to_s, @appname, "#{@config}.#{@ext}"
   end
 
   # Not really for public use.
   def version_file_name
-    File.join XDG['DATA'].to_s, @appname, 'VERSION'
+    File.join XDG[:DATA].to_s, @appname, 'VERSION'
   end
 
   def config?

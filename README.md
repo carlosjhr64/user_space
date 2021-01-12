@@ -1,6 +1,6 @@
 # UserSpace
 
-* [VERSION 3.0.3](https://github.com/carlosjhr64/user_space/releases)
+* [VERSION 4.0.210112](https://github.com/carlosjhr64/user_space/releases)
 * [github](https://www.github.com/carlosjhr64/user_space)
 * [rubygems](https://rubygems.org/gems/user_space)
 
@@ -10,36 +10,40 @@ Maintains the app's XDG features: app's cache, config, and data directories.
 
 ## SYNOPSIS:
 
-    require 'json' # Using JSON parser for the config file.
-    require 'user_space'
-    # APP::CONFIG is your app's configuration.
-    # Perhaps like...
-    APP::CONFIG = {:tts=>'espeak', }
-    USERSPACE = UserSpace.new(JSON)
-    # Unless this version has been installed,
-    # we copy over our data and cache directories.
-    USERSPACE.install unless USERSPACE.version == APP::VERSION
-    if USERSPACE.config?
-      # Because JSON hashes by String, converting to Symbol.
-      # We pad up APP::CONFIG with user's preferences:
-      USERSPACE.config.each{|opt, value| APP::CONFIG[opt.to_sym] = value}
-    else
-      # We initialize user preferences with our initial APP::CONFIG
-      STDERR.puts "Writting '#{USERSPACE.config_file_name}'"
-      USERSPACE.config = APP::CONFIG
-    end
-    # To do the same thing, you can also say:
-    # USERSPACE.configures(APP::CONFIG)
+```ruby
+require 'json' # Using JSON parser for the config file.
+require 'user_space'
+# APP::CONFIG is your app's configuration.
+# Perhaps like...
+APP::CONFIG = {:tts=>'espeak', }
+USERSPACE = UserSpace.new(JSON)
+# Unless this version has been installed,
+# we copy over our data and cache directories.
+USERSPACE.install unless USERSPACE.version == APP::VERSION
+if USERSPACE.config?
+  # Because JSON hashes by String, converting to Symbol.
+  # We pad up APP::CONFIG with user's preferences:
+  USERSPACE.config.each{|opt, value| APP::CONFIG[opt.to_sym] = value}
+else
+  # We initialize user preferences with our initial APP::CONFIG
+  STDERR.puts "Writting '#{USERSPACE.config_file_name}'"
+  USERSPACE.config = APP::CONFIG
+end
+# To do the same thing, you can also say:
+# USERSPACE.configures(APP::CONFIG)
+```
 
 ## INSTALL:
 
-    sudo gem install user_space
+```shell
+$ gem install user_space
+```
 
 ## LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2020 CarlosJHR64
+Copyright (c) 2021 CarlosJHR64
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
