@@ -9,7 +9,6 @@ carlosjhr
 CarlosJHR
 chmod
 config
-Config
 CONFIG
 configdir
 cp
@@ -18,6 +17,7 @@ dest
 dir
 dirname
 downcase
+ENV
 espeak
 fh
 fileutils

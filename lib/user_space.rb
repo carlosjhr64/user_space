@@ -1,14 +1,13 @@
 require 'fileutils'
-require 'xdg'
 # Requires:
 #`ruby`
 
 class UserSpace
-  VERSION = '4.0.210112'
+  VERSION = '4.0.210113'
   XDG = {
-    CACHE:  ::XDG::Cache.new.home.to_s,
-    CONFIG: ::XDG::Config.new.home.to_s,
-    DATA:   ::XDG::Data.new.home.to_s,
+    CACHE:  ENV['XDG_CACHE_HOME']  || File.expand_path('~/.cache'),
+    CONFIG: ENV['XDG_CONFIG_HOME'] || File.expand_path('~/.config'),
+    DATA:   ENV['XDG_DATA_HOME']   || File.expand_path('~/.local/share'),
   }
 
   attr_reader :parser,:ext,:appname,:xdgbases,:appdir,:config
