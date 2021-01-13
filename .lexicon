@@ -5,16 +5,13 @@ backtrace
 base
 basedir
 basename
-CACHE
 cachedir
 chmod
 config
-CONFIG
 configdir
 config_file_name
 configures
 cp
-DATA
 datadir
 dest
 __dir__

@@ -32,9 +32,9 @@ class TestUserSpace < Test::Unit::TestCase
     assert_equal(dirname, userspace.appdir)
 
     xdgbases = userspace.xdgbases
-    assert(xdgbases.include?(:CACHE))
-    assert(xdgbases.include?(:CONFIG))
-    assert(xdgbases.include?(:DATA))
+    assert(xdgbases.include?('cache'))
+    assert(xdgbases.include?('config'))
+    assert(xdgbases.include?('data'))
 
     count = 0
     userspace.xdg_pairs do |basedir, userdir|

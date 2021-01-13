@@ -5,16 +5,16 @@ require 'fileutils'
 class UserSpace
   VERSION = '4.0.210113'
   XDG = {
-    CACHE:  ENV['XDG_CACHE_HOME']  || File.expand_path('~/.cache'),
-    CONFIG: ENV['XDG_CONFIG_HOME'] || File.expand_path('~/.config'),
-    DATA:   ENV['XDG_DATA_HOME']   || File.expand_path('~/.local/share'),
+    'cache'  => ENV['XDG_CACHE_HOME']  || File.expand_path('~/.cache'),
+    'config' => ENV['XDG_CONFIG_HOME'] || File.expand_path('~/.config'),
+    'data'   => ENV['XDG_DATA_HOME']   || File.expand_path('~/.local/share'),
   }
 
   attr_reader :parser,:ext,:appname,:xdgbases,:appdir,:config
   def initialize( parser:,
                   ext:      parser.to_s.downcase,
                   appname:  File.basename($0),
-                  xdgbases: [:CACHE, :CONFIG, :DATA],
+                  xdgbases: ['cache', 'config', 'data'],
                   appdir:   File.dirname(__dir__),
                   config:   'config')
     @parser,@ext,@appname,@xdgbases,@appdir,@config = parser,ext,appname,xdgbases,appdir,config
@@ -24,7 +24,7 @@ class UserSpace
   def xdg_pairs
     @xdgbases.each do |base|
       # yield basedir, userdir
-      yield File.join(@appdir, base.to_s.downcase), File.join(XDG[base], @appname)
+      yield File.join(@appdir, base), File.join(XDG[base], @appname)
     end
   end
 
@@ -58,25 +58,25 @@ class UserSpace
   end
 
   def cachedir
-    File.join XDG[:CACHE], @appname
+    File.join XDG['cache'], @appname
   end
 
   def configdir
-    File.join XDG[:CONFIG], @appname
+    File.join XDG['config'], @appname
   end
 
   def datadir
-    File.join XDG[:DATA], @appname
+    File.join XDG['data'], @appname
   end
 
   # Not really for public use.
   def config_file_name
-    File.join XDG[:CONFIG], @appname, "#{@config}.#{@ext}"
+    File.join XDG['config'], @appname, "#{@config}.#{@ext}"
   end
 
   # Not really for public use.
   def version_file_name
-    File.join XDG[:DATA], @appname, 'VERSION'
+    File.join XDG['data'], @appname, 'VERSION'
   end
 
   def config?
