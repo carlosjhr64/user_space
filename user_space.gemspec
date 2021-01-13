@@ -25,6 +25,6 @@ README.md
 lib/user_space.rb
   )
 
-  s.requirements << 'ruby: ruby 2.7.1p83 (2020-03-31 revision a0c7c23c9c) [x86_64-linux]'
+  s.requirements << 'ruby: ruby 3.0.0p0 (2020-12-25 revision 95aff21468) [x86_64-linux]'
 
 end
