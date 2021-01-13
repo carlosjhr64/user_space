@@ -13,24 +13,39 @@ Maintains the app's XDG features: app's cache, config, and data directories.
 ```ruby
 require 'json' # Using JSON parser for the config file.
 require 'user_space'
-# APP::CONFIG is your app's configuration.
-# Perhaps like...
-APP::CONFIG = {:tts=>'espeak', }
-USERSPACE = UserSpace.new(JSON)
+
+module App
+  # ::App::CONFIG is your app's configuration.
+  CONFIG  = {:tts=>'espeak', }
+  VERSION = '1.2.3'
+end
+
+USERSPACE = UserSpace.new(parser:JSON, appname:'myapp') #~> ^#<UserSpace:
+# Will maintain these directories:
+['~/.cache/myapp',
+ '~/.config/myapp',
+ '~/.local/share/myapp'
+].all?{File.directory? File.expand_path _1} #=> true
+
 # Unless this version has been installed,
 # we copy over our data and cache directories.
-USERSPACE.install unless USERSPACE.version == APP::VERSION
+USERSPACE.install unless USERSPACE.version == App::VERSION
+# We have a version file:
+File.exist? File.expand_path '~/.local/share/myapp/VERSION' #=> true
+
 if USERSPACE.config?
   # Because JSON hashes by String, converting to Symbol.
-  # We pad up APP::CONFIG with user's preferences:
-  USERSPACE.config.each{|opt, value| APP::CONFIG[opt.to_sym] = value}
+  # We pad up App::CONFIG with user's preferences:
+  USERSPACE.config.each{|opt, value| App::CONFIG[opt.to_sym] = value}
 else
-  # We initialize user preferences with our initial APP::CONFIG
+  # We initialize user preferences with our initial App::CONFIG
   STDERR.puts "Writting '#{USERSPACE.config_file_name}'"
-  USERSPACE.config = APP::CONFIG
+  USERSPACE.config = App::CONFIG
 end
 # To do the same thing, you can also say:
-# USERSPACE.configures(APP::CONFIG)
+# USERSPACE.configures(App::CONFIG)
+# We have a config file:
+File.exist? File.expand_path '~/.config/myapp/config.json' #=> true
 ```
 
 ## INSTALL:
