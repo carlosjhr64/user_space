@@ -12,11 +12,13 @@ Gem::Specification.new do |s|
   s.licenses = ['MIT']
 
   s.description = <<DESCRIPTION
-Maintains the app's XDG features: app's cache, config, and data directories.
+Maintains the user's cache, config, and data directories
+with the gem-apps cache, config, and data files.
 DESCRIPTION
 
   s.summary = <<SUMMARY
-Maintains the app's XDG features: app's cache, config, and data directories.
+Maintains the user's cache, config, and data directories
+with the gem-apps cache, config, and data files.
 SUMMARY
 
   s.require_paths = ['lib']
