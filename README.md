@@ -6,7 +6,8 @@
 
 ## DESCRIPTION:
 
-Maintains the app's XDG features: app's cache, config, and data directories.
+Maintains the user's cache, config, and data directories
+with the gem-apps cache, config, and data files.
 
 ## SYNOPSIS:
 
