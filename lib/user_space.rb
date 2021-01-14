@@ -3,7 +3,7 @@ require 'fileutils'
 #`ruby`
 
 class UserSpace
-  VERSION = '4.0.210113'
+  VERSION = '4.0.210114'
   XDG = {
     'cache'  => ENV['XDG_CACHE_HOME']  || File.expand_path('~/.cache'),
     'config' => ENV['XDG_CONFIG_HOME'] || File.expand_path('~/.config'),
