@@ -1,0 +1,12 @@
+#! ruby
+require 'test/unit'
+require 'user_space'
+
+class TestAppDir < Test::Unit::TestCase
+  def get_appdir
+    UserSpace.appdir
+  end
+  def test_appdir
+    assert_equal File.dirname(__dir__), get_appdir
+  end
+end
