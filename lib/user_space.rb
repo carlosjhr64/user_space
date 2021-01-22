@@ -3,19 +3,23 @@ require 'fileutils'
 #`ruby`
 
 class UserSpace
-  VERSION = '4.0.210114'
+  VERSION = '4.1.210122'
   XDG = {
     'cache'  => ENV['XDG_CACHE_HOME']  || File.expand_path('~/.cache'),
     'config' => ENV['XDG_CONFIG_HOME'] || File.expand_path('~/.config'),
     'data'   => ENV['XDG_DATA_HOME']   || File.expand_path('~/.local/share'),
   }
 
+  def self.appdir
+    File.dirname File.dirname File.expand_path caller(1..2)[1].split(':',2)[0]
+  end
+
   attr_reader :parser,:ext,:appname,:xdgbases,:appdir,:config
   def initialize( parser:,
+                  appdir:   UserSpace.appdir,
                   ext:      parser.to_s.downcase,
                   appname:  File.basename($0),
                   xdgbases: ['cache', 'config', 'data'],
-                  appdir:   File.dirname(__dir__),
                   config:   'config')
     @parser,@ext,@appname,@xdgbases,@appdir,@config = parser,ext,appname,xdgbases,appdir,config
     install(false) # install with no overwrite

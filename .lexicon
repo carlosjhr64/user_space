@@ -6,6 +6,7 @@ base
 basedir
 basename
 cachedir
+caller
 chmod
 config
 configdir
@@ -14,7 +15,6 @@ configures
 cp
 datadir
 dest
-__dir__
 Dir
 directory
 dirname
@@ -47,6 +47,7 @@ raise
 read
 require
 respond_to
+split
 src
 strip
 sub

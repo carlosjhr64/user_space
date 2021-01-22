@@ -14,7 +14,6 @@ configdir
 cp
 datadir
 dest
-dir
 dirname
 downcase
 ENV
