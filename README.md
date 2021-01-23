@@ -1,6 +1,6 @@
 # UserSpace
 
-* [VERSION 4.1.210122](https://github.com/carlosjhr64/user_space/releases)
+* [VERSION 5.0.210123](https://github.com/carlosjhr64/user_space/releases)
 * [github](https://www.github.com/carlosjhr64/user_space)
 * [rubygems](https://rubygems.org/gems/user_space)
 
@@ -12,7 +12,7 @@ with the gem-apps cache, config, and data files.
 ## SYNOPSIS:
 
 ```ruby
-require 'json' # Using JSON parser for the config file.
+require 'rbon' # Using RBON(is not JSON!) parser for the config file.
 require 'user_space'
 
 module App
@@ -21,32 +21,25 @@ module App
   VERSION = '1.2.3'
 end
 
-USERSPACE = UserSpace.new(parser:JSON, appname:'myapp') #~> ^#<UserSpace:
+USERSPACE = UserSpace.new(parser:RBON, appname:'myapp') #~> ^#<UserSpace:
 # Will maintain these directories:
 ['~/.cache/myapp',
  '~/.config/myapp',
  '~/.local/share/myapp'
 ].all?{File.directory? File.expand_path _1} #=> true
 
-# Unless this version has been installed,
-# we copy over our data and cache directories.
-USERSPACE.install unless USERSPACE.version == App::VERSION
-# We have a version file:
-File.exist? File.expand_path '~/.local/share/myapp/VERSION' #=> true
-
 if USERSPACE.config?
-  # Because JSON hashes by String, converting to Symbol.
-  # We pad up App::CONFIG with user's preferences:
-  USERSPACE.config.each{|opt, value| App::CONFIG[opt.to_sym] = value}
+  # Update APP::CONFIG with user's preferences.
+  App::CONFIG.merge! USERSPACE.config
 else
-  # We initialize user preferences with our initial App::CONFIG
+  # Write initial configuration with App::CONFIG
   STDERR.puts "Writting '#{USERSPACE.config_file_name}'"
   USERSPACE.config = App::CONFIG
 end
 # To do the same thing, you can also say:
 # USERSPACE.configures(App::CONFIG)
 # We have a config file:
-File.exist? File.expand_path '~/.config/myapp/config.json' #=> true
+File.exist? File.expand_path '~/.config/myapp/config.rbon' #=> true
 ```
 
 ## INSTALL:

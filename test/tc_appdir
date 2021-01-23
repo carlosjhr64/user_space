@@ -1,12 +1,35 @@
 #! ruby
 require 'test/unit'
 require 'user_space'
+require './test/lib/appdir.rb' # provides appdir3 and appdir4
+
+GEMDIR = File.dirname __dir__
+
+# Using the exact same code as in UserSpace.appdir
+lib = '/lib'
+DIR0 = (_ = caller(1..2)[-1]&.split(':',2)&.fetch(0)) and File.dirname(File.dirname(File.expand_path(_)))&.chomp(lib)
+
+def appdir1(lib='/lib')
+  (_ = caller(1..2)[-1]&.split(':',2)&.fetch(0)) and File.dirname(File.dirname(File.expand_path(_)))&.chomp(lib)
+end
+
+def appdir2
+  UserSpace.appdir
+end
+
+DIR1 = appdir1
+DIR2 = appdir2
+DIR3 = appdir3
+DIR4 = appdir4
+DIR5 = appdir5('/test') # we're in /test, not /lib.
 
 class TestAppDir < Test::Unit::TestCase
-  def get_appdir
-    UserSpace.appdir
-  end
   def test_appdir
-    assert_equal File.dirname(__dir__), get_appdir
+    assert_nil DIR0
+    assert_equal GEMDIR, DIR1
+    assert_equal GEMDIR, DIR2
+    assert_equal GEMDIR, DIR3
+    assert_equal GEMDIR, DIR4
+    assert_equal GEMDIR, DIR5
   end
 end

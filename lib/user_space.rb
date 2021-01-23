@@ -3,15 +3,15 @@ require 'fileutils'
 #`ruby`
 
 class UserSpace
-  VERSION = '4.1.210122'
+  VERSION = '5.0.210123'
   XDG = {
     'cache'  => ENV['XDG_CACHE_HOME']  || File.expand_path('~/.cache'),
     'config' => ENV['XDG_CONFIG_HOME'] || File.expand_path('~/.config'),
     'data'   => ENV['XDG_DATA_HOME']   || File.expand_path('~/.local/share'),
   }
 
-  def self.appdir
-    File.dirname File.dirname File.expand_path caller(1..2)[1].split(':',2)[0]
+  def self.appdir(lib='/lib')
+    (_ = caller(1..2)[-1]&.split(':',2)&.fetch(0)) and File.dirname(File.dirname(File.expand_path(_)))&.chomp(lib)
   end
 
   attr_reader :parser,:ext,:appname,:xdgbases,:appdir,:config
@@ -22,7 +22,7 @@ class UserSpace
                   xdgbases: ['cache', 'config', 'data'],
                   config:   'config')
     @parser,@ext,@appname,@xdgbases,@appdir,@config = parser,ext,appname,xdgbases,appdir,config
-    install(false) # install with no overwrite
+    install
   end
 
   def xdg_pairs
@@ -32,30 +32,31 @@ class UserSpace
     end
   end
 
-  # Note that initialize will not overwrite anything.
-  # This overwrites the user's data directory with a fresh install.
-  # App should consider being nice about this,
-  # like warn the user or something.
-  def install(overwrite=true)
+  # Will not overwrite anything.
+  # Only copies over missing directories and files.
+  # Verifies directory expectations.
+  def install
     xdg_pairs do |basedir, userdir|
       if File.exist?(userdir)
         # Sanity check
-        raise "Not a directory: #{userdir}" unless File.directory?(userdir)
-        # Pre-existing directory.
-        # Return unless user wants to overwrite.
-        next unless overwrite
+        assert_directory(userdir)
       else
         Dir.mkdir(userdir, 0700)
       end
       if File.directory? basedir
         Dir.glob("#{basedir}/**/*").each do |src|
           dest = src.sub(basedir, userdir)
-          if File.directory? src
-            Dir.mkdir dest unless File.exist? dest
+          if File.exist? dest
+            # Sanity checks
+            assert_directory(dest) if File.directory? src
           else
-            FileUtils.cp src, dest
+            if File.directory? src
+              Dir.mkdir dest
+            else
+              FileUtils.cp src, dest
+            end
+            FileUtils.chmod('u+rwX,go-rwx', dest)
           end
-          FileUtils.chmod('u+rwX,go-rwx', dest)
         end
       end
     end
@@ -73,14 +74,8 @@ class UserSpace
     File.join XDG['data'], @appname
   end
 
-  # Not really for public use.
   def config_file_name
     File.join XDG['config'], @appname, "#{@config}.#{@ext}"
-  end
-
-  # Not really for public use.
-  def version_file_name
-    File.join XDG['data'], @appname, 'VERSION'
   end
 
   def config?
@@ -104,27 +99,16 @@ class UserSpace
 
   def configures(hash)
     if config? # file exists
-      config.each{|opt, value| hash[opt.to_sym] = value}
+      hash.merge! config
     else
       $stderr.puts config_file_name if $VERBOSE
       self.config = hash
     end
   end
 
-  def version?
-    File.exist?(version_file_name)
-  end
+  private
 
-  # This reads the data directory's version file
-  def version
-    File.read(version_file_name).strip
-  rescue
-    $stderr.puts $!.message   if $VERBOSE
-    $stderr.puts $!.backtrace if $DEBUG
-    nil
-  end
-
-  def version=(v)
-    File.open(version_file_name, 'w', 0600){|fh| fh.puts v}
+  def assert_directory(dir)
+    raise "Not a directory: #{dir}" unless File.directory?(dir)
   end
 end

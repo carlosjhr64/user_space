@@ -14,6 +14,7 @@ configdir
 cp
 datadir
 dest
+dir
 dirname
 downcase
 ENV
@@ -23,13 +24,13 @@ fileutils
 FileUtils
 github
 https
-json
 JSON
 MERCHANTABILITY
 mkdir
 myapp
 NONINFRINGEMENT
-Pre
+rbon
+RBON
 rubygems
 rwx
 rwX
@@ -37,7 +38,6 @@ src
 stderr
 STDERR
 sublicense
-sym
 tts
 userdir
 UserSpace

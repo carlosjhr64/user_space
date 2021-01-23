@@ -19,7 +19,7 @@ require 'user_space'
 class TestUserSpace < Test::Unit::TestCase
 
   def test_user_space_version
-    assert_equal('4.1.210122', UserSpace::VERSION)
+    assert_equal('5.0.210123', UserSpace::VERSION)
   end
 
   def test_user_space_new
@@ -50,9 +50,6 @@ class TestUserSpace < Test::Unit::TestCase
     assert File.exist? configdir
     assert File.exist? datadir
 
-    version = File.read('data/VERSION').strip
-    assert_equal version, userspace.version
-
     config_file_name = userspace.config_file_name
     refute File.exist? config_file_name
     config1 = {'a'=>"A", 'b'=>"B"}
@@ -61,50 +58,31 @@ class TestUserSpace < Test::Unit::TestCase
     config2 = JSON.parse File.read config_file_name
     assert_equal config1, config2
 
-    # Overwrite version file...
-    version_file_name = userspace.version_file_name
-    File.open(version_file_name, 'w'){|fh|fh.puts 'A.B.C'}
-    # Now we get the version given to the file:
-    assert_equal 'A.B.C', userspace.version
-    # Which is different from the initial version
-    refute version == 'A.B.C'
-
-    # But we can re-fresh our install
-    assert_nothing_raised(Exception){userspace.install}
-    # Now we have our initial version back
-    assert_equal version, userspace.version
-
-    [config_file_name, version_file_name].each do |fn|
-      stat = File.stat(fn)
-      assert_equal stat.mode.to_s(8), '100600'
-    end
+    stat = File.stat config_file_name
+    assert_equal stat.mode.to_s(8), '100600'
 
     [cachedir, configdir, datadir].each do |dn|
       stat = File.stat(dn)
       assert_equal stat.mode.to_s(8), '40700'
     end
 
-    assert userspace.version?
-    assert_nothing_raised(Exception){ userspace.version='Fantastico' }
-    assert_equal userspace.version, 'Fantastico'
-
     # testing configures
     config_file_name = userspace.config_file_name
     File.unlink config_file_name if File.exist? config_file_name
-    config1 = {:a=>'A', :b=>'B'}
+    config1 = {'a'=>'A', 'b'=>'B'}
     refute File.exist? config_file_name
     userspace.configures(config1)
     # Here, it copies to file.
     assert File.exist? config_file_name
     # And config1 remains unchanged.
-    assert_equal(config1[:a], 'A')
-    assert_equal(config1[:b], 'B')
-    assert_equal(config1[:c], nil)
-    config2 = {:a=>'AAA', :c=>'CCC'}
+    assert_equal(config1['a'], 'A')
+    assert_equal(config1['b'], 'B')
+    assert_equal(config1['c'], nil)
+    config2 = {'a'=>'AAA', 'c'=>'CCC'}
     # Here, config2 is overwritten with config1 from file.
     userspace.configures(config2)
-    assert_equal(config2[:a], 'A') # overwritten
-    assert_equal(config2[:b], 'B') # padded up
-    assert_equal(config2[:c], 'CCC') # Original value
+    assert_equal(config2['a'], 'A')   # overwritten
+    assert_equal(config2['b'], 'B')   # padded up
+    assert_equal(config2['c'], 'CCC') # Original value
   end
 end
