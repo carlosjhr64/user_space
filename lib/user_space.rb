@@ -3,7 +3,7 @@ require 'fileutils'
 #`ruby`
 
 class UserSpace
-  VERSION = '5.0.210123'
+  VERSION = '5.1.210201'
   XDG = {
     'cache'  => ENV['XDG_CACHE_HOME']  || File.expand_path('~/.cache'),
     'config' => ENV['XDG_CONFIG_HOME'] || File.expand_path('~/.config'),
@@ -14,14 +14,14 @@ class UserSpace
     (_ = caller(1..2)[-1]&.split(':',2)&.fetch(0)) and File.dirname(File.dirname(File.expand_path(_)))&.chomp(lib)
   end
 
-  attr_reader :parser,:ext,:appname,:xdgbases,:appdir,:config
+  attr_reader :parser,:ext,:appname,:xdgbases,:appdir,:cfg
   def initialize( parser:,
                   appdir:   UserSpace.appdir,
                   ext:      parser.to_s.downcase,
                   appname:  File.basename($0),
                   xdgbases: ['cache', 'config', 'data'],
                   config:   'config')
-    @parser,@ext,@appname,@xdgbases,@appdir,@config = parser,ext,appname,xdgbases,appdir,config
+    @parser,@ext,@appname,@xdgbases,@appdir,@cfg = parser,ext,appname,xdgbases,appdir,config
     install
   end
 
@@ -75,7 +75,7 @@ class UserSpace
   end
 
   def config_file_name
-    File.join XDG['config'], @appname, "#{@config}.#{@ext}"
+    File.join XDG['config'], @appname, "#{@cfg}.#{@ext}"
   end
 
   def config?

@@ -19,13 +19,16 @@ require 'user_space'
 class TestUserSpace < Test::Unit::TestCase
 
   def test_user_space_version
-    assert_equal('5.0.210123', UserSpace::VERSION)
+    assert_equal('5.1.210201', UserSpace::VERSION)
   end
 
   def test_user_space_new
     userspace = nil
     assert_nothing_raised(Exception){userspace = UserSpace.new(parser:JSON)}
 
+    assert_equal(JSON, userspace.parser)
+    assert_equal('json', userspace.ext)
+    assert_equal('config', userspace.cfg)
     assert_equal(APPNAME, userspace.appname)
 
     dirname = File.dirname File.dirname File.expand_path __FILE__
