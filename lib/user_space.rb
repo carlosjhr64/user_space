@@ -11,7 +11,8 @@ class UserSpace
   }
 
   def self.appdir(lib='/lib')
-    (_ = caller(1..2)[-1]&.split(':',2)&.fetch(0)) and File.dirname(File.dirname(File.expand_path(_)))&.chomp(lib)
+    (_ = caller(1..2)[-1]&.split(':',2)&.fetch(0)) and
+      File.dirname(File.dirname(File.expand_path(_)))&.chomp(lib)
   end
 
   attr_reader :parser,:ext,:appname,:xdgbases,:appdir,:cfg
@@ -21,7 +22,8 @@ class UserSpace
                   appname:  File.basename($0),
                   xdgbases: ['cache', 'config', 'data'],
                   config:   'config')
-    @parser,@ext,@appname,@xdgbases,@appdir,@cfg = parser,ext,appname,xdgbases,appdir,config
+    @parser,@ext,@appname,@xdgbases,@appdir,@cfg =
+      parser,ext,appname,xdgbases,appdir,config
     install
   end
 
@@ -93,7 +95,8 @@ class UserSpace
 
   # Saves config
   def config=(obj)
-    dump = (@parser.respond_to?(:pretty_generate))? @parser.pretty_generate(obj) : @parser.dump(obj)
+    dump = (@parser.respond_to?(:pretty_generate))?
+      @parser.pretty_generate(obj) : @parser.dump(obj)
     File.open(config_file_name, 'w', 0600){|fh|fh.puts dump}
   end
 
