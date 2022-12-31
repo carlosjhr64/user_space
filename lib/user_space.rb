@@ -3,16 +3,17 @@ require 'fileutils'
 #`ruby`
 
 class UserSpace
-  VERSION = '5.1.221231'
+  VERSION = '5.2.221231'
   XDG = {
     'cache'  => ENV['XDG_CACHE_HOME']  || File.expand_path('~/.cache'),
     'config' => ENV['XDG_CONFIG_HOME'] || File.expand_path('~/.config'),
     'data'   => ENV['XDG_DATA_HOME']   || File.expand_path('~/.local/share'),
   }
 
-  def self.appdir(lib='/lib')
-    (_ = caller(1..2)[-1]&.split(':',2)&.fetch(0)) and
-      File.dirname(File.dirname(File.expand_path(_)))&.chomp(lib)
+  APPDIR = lambda{File.dirname(File.expand_path(_1)).chomp('/lib')}
+
+  def UserSpace.appdir(dir=File.dirname(caller(1..2)[-1].split(':',2).fetch(0)))
+    APPDIR[dir]
   end
 
   attr_reader :parser,:ext,:appname,:xdgbases,:appdir,:cfg

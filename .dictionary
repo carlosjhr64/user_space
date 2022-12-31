@@ -2,6 +2,7 @@ app
 App
 APP
 appdir
+APPDIR
 appname
 attr
 backtrace
@@ -21,6 +22,7 @@ cp
 datadir
 def
 dest
+dir
 dir
 Dir
 dirname

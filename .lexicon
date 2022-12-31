@@ -1,5 +1,6 @@
-_
+_1
 appdir
+APPDIR
 appname
 assert_directory
 attr_reader
@@ -19,6 +20,7 @@ configures
 cp
 datadir
 dest
+__dir__
 dir
 Dir
 directory
@@ -39,7 +41,7 @@ hash
 initialize
 install
 join
-lib
+lambda
 load
 merge
 message
@@ -54,6 +56,7 @@ raise
 read
 require
 respond_to
+Ruby31
 split
 src
 sub

@@ -1,6 +1,6 @@
 # UserSpace
 
-* [VERSION 5.1.221231](https://github.com/carlosjhr64/user_space/releases)
+* [VERSION 5.2.221231](https://github.com/carlosjhr64/user_space/releases)
 * [github](https://www.github.com/carlosjhr64/user_space)
 * [rubygems](https://rubygems.org/gems/user_space)
 
