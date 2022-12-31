@@ -10,7 +10,8 @@ class UserSpace
     'data'   => ENV['XDG_DATA_HOME']   || File.expand_path('~/.local/share'),
   }
 
-  APPDIR = lambda{File.dirname(File.expand_path(_1)).chomp('/lib')}
+  APPDIR = lambda{
+    File.dirname(File.expand_path(_1)).chomp(File::SEPARATOR+'lib')}
 
   def UserSpace.appdir(dir=File.dirname(caller(1..2)[-1].split(':',2).fetch(0)))
     APPDIR[dir]
