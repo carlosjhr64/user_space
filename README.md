@@ -1,6 +1,6 @@
 # UserSpace
 
-* [VERSION 5.2.221231](https://github.com/carlosjhr64/user_space/releases)
+* [VERSION 5.2.230101](https://github.com/carlosjhr64/user_space/releases)
 * [github](https://www.github.com/carlosjhr64/user_space)
 * [rubygems](https://rubygems.org/gems/user_space)
 
@@ -52,7 +52,7 @@ $ gem install user_space
 
 (The MIT License)
 
-Copyright (c) 2022 CarlosJHR64
+Copyright (c) 2023 CarlosJHR64
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

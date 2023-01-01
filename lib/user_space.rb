@@ -3,7 +3,7 @@ require 'fileutils'
 #`ruby`
 
 class UserSpace
-  VERSION = '5.2.221231'
+  VERSION = '5.2.230101'
   XDG = {
     'cache'  => ENV['XDG_CACHE_HOME']  || File.expand_path('~/.cache'),
     'config' => ENV['XDG_CONFIG_HOME'] || File.expand_path('~/.config'),
@@ -11,7 +11,7 @@ class UserSpace
   }
 
   APPDIR = lambda{
-    File.dirname(File.expand_path(_1)).chomp(File::SEPARATOR+'lib')}
+    File.dirname(File.expand_path(_1)).sub(%r([/\\]lib),'')}
 
   def UserSpace.appdir(dir=File.dirname(caller(1..2)[-1].split(':',2).fetch(0)))
     APPDIR[dir]

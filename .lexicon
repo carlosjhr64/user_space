@@ -12,7 +12,6 @@ cachedir
 caller
 cfg
 chmod
-chomp
 config
 configdir
 config_file_name
@@ -57,7 +56,6 @@ read
 require
 respond_to
 Ruby31
-SEPARATOR
 split
 src
 sub
