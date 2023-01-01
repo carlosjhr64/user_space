@@ -19,7 +19,6 @@ configures
 cp
 datadir
 dest
-__dir__
 dir
 Dir
 directory
@@ -55,7 +54,6 @@ raise
 read
 require
 respond_to
-Ruby31
 split
 src
 sub

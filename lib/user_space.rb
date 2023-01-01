@@ -11,7 +11,7 @@ class UserSpace
   }
 
   APPDIR = lambda{
-    File.dirname(File.expand_path(_1)).sub(%r([/\\]lib),'')}
+    File.dirname(File.expand_path(_1)).sub(%r([/\\]lib$),'')}
 
   def UserSpace.appdir(dir=File.dirname(caller(1..2)[-1].split(':',2).fetch(0)))
     APPDIR[dir]

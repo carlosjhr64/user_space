@@ -23,7 +23,6 @@ datadir
 def
 dest
 dir
-dir
 Dir
 dirname
 downcase
